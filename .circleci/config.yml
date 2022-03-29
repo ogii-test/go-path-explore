@@ -2,8 +2,11 @@ version: 2.1
     
 jobs:
   test:
+    parameters:
+      img:
+        type: string
     machine:
-      image: ubuntu-2004:202201-02
+      image: circleci/classic:201707-01
     resource_class: medium
     environment:
 #       - GOPATH: /home/circleci/.go_workspace
@@ -52,4 +55,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              img:
+                - circleci/classic:201707-01
+                - ubuntu-2004:202201-02
