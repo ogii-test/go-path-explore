@@ -4,7 +4,7 @@ jobs:
   test:
     machine:
       image: ubuntu-2004:202201-02
-    resource: medium
+    resource_class: medium
     environment:
       - GOPATH: /home/circleci/.go_workspace
       - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
