@@ -36,6 +36,13 @@ jobs:
             
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
+            
+      - run:
+          name: staticccheck
+          command: |
+            go install honnef.co/go/tools/cmd/staticcheck@latest
+            ./.circleci/lint.sh
+          working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
   test2:
     machine: true
@@ -68,6 +75,13 @@ jobs:
             
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
+            
+      - run:
+          name: staticccheck
+          command: |
+            go install honnef.co/go/tools/cmd/staticcheck@latest
+            ./.circleci/lint.sh
+          working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
 workflows:
   main:
