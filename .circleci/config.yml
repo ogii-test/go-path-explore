@@ -6,7 +6,7 @@ jobs:
       img:
         type: string
     machine:
-      image: circleci/classic:201707-01
+      image: << parameters.img >>
     resource_class: medium
     environment:
 #       - GOPATH: /home/circleci/.go_workspace
