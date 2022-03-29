@@ -1,12 +1,4 @@
 version: 2.1
-
-defaults: &defaults
-  machine:
-    image: ubuntu-2004:202201-02
-  environment:
-    GOPATH: /home/circleci/.go_workspace
-    PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    IMPORT_PATH: github.com/ebisol/ebica-api
     
 jobs:
   test:
@@ -17,6 +9,7 @@ jobs:
       PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       IMPORT_PATH: github.com/ebisol/ebica-api
       HOME: /home
+      PYENV_ROOT: /home
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -26,6 +19,7 @@ jobs:
             printenv GOPATH
             printenv IMPORT_PATH
             printenv HOME
+            printenv PYENV_ROOT
 #       - run:
 #           name: make go path
 #           command: |
