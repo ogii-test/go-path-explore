@@ -9,9 +9,9 @@ jobs:
       image: << parameters.img >>
     resource_class: medium
     environment:
-      - GOPATH: /home/circleci/.go_workspace
-      - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      - IMPORT_PATH: github.com/ebisol/ebica-api
+      GOPATH: /home/circleci/.go_workspace
+      PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      IMPORT_PATH: github.com/ebisol/ebica-api
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -49,15 +49,12 @@ jobs:
              - ./ebica-api/*
              - ./.go_workspace/src/*
   test2:
-    parameters:
-      img:
-        type: string
     machine: true
     resource_class: medium
     environment:
-      - GOPATH: /home/circleci/.go_workspace
-      - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-      - IMPORT_PATH: github.com/ebisol/ebica-api
+      GOPATH: /home/circleci/.go_workspace
+      PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      IMPORT_PATH: github.com/ebisol/ebica-api
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -104,4 +101,4 @@ workflows:
               img:
                 - circleci/classic:201707-01
                 - ubuntu-2004:202201-02
-        - test2
+      - test2
