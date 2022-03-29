@@ -6,7 +6,7 @@ jobs:
       image: ubuntu-2004:202201-02
     resource_class: medium
     environment:
-      - GOPATH: /home/circleci/.go_workspace
+#       - GOPATH: /home/circleci/.go_workspace
       - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       - IMPORT_PATH: github.com/ebisol/ebica-api
       - HOME: /home
@@ -33,7 +33,7 @@ jobs:
             mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
             
             
-            rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
+            # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
 #       - run:
 #           name: Go Build
