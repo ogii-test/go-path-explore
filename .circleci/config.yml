@@ -9,7 +9,7 @@ jobs:
       image: << parameters.img >>
     resource_class: medium
     environment:
-      GOPATH: /home/circleci2/.go_workspace
+      GOPATH: /home/circleci/.go_workspace
       PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       IMPORT_PATH: github.com/ebisol/ebica-api
       PYENV_ROOT: /home/notpythonohboy
