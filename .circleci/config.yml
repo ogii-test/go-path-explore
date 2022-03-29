@@ -4,6 +4,7 @@ jobs:
   test:
     machine:
       image: ubuntu-2004:202201-02
+    resource: medium
     environment:
       - GOPATH: /home/circleci/.go_workspace
       - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -16,10 +17,16 @@ jobs:
       - run:
           name: debug
           command: |
+            echo $GOPATH
+            echo $IMPORT_PATH
+            echo $HOME
+            echo $PYENV_ROOT
+
             printenv GOPATH
             printenv IMPORT_PATH
             printenv HOME
-            printenv PYENV_ROOT
+            printenv $PYENV_ROOT
+            
 #       - run:
 #           name: make go path
 #           command: |
