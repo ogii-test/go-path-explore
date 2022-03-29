@@ -43,11 +43,7 @@ jobs:
              make genall
              GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
            working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
-       - persist_to_workspace:
-           root: /home/circleci/
-           paths:
-             - ./ebica-api/*
-             - ./.go_workspace/src/*
+
   test2:
     machine: true
     resource_class: medium
@@ -86,11 +82,6 @@ jobs:
              make genall
              GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
            working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
-       - persist_to_workspace:
-           root: /home/circleci/
-           paths:
-             - ./ebica-api/*
-             - ./.go_workspace/src/*
 
 workflows:
   main:
