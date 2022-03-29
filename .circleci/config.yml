@@ -36,13 +36,6 @@ jobs:
             
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-       - run:
-           name: Go Build
-           command: |
-             go env -w GO111MODULE=on
-             make genall
-             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
-           working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
   test2:
     machine: true
@@ -75,13 +68,6 @@ jobs:
             
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-       - run:
-           name: Go Build
-           command: |
-             go env -w GO111MODULE=on
-             make genall
-             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
-           working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
 workflows:
   main:
