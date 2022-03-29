@@ -7,9 +7,15 @@ defaults: &defaults
     GOPATH: /home/circleci/.go_workspace
     PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     IMPORT_PATH: github.com/ebisol/ebica-api
+    
 jobs:
   test:
-    <<: *defaults
+    machine:
+      image: ubuntu-2004:202201-02
+    environment:
+      GOPATH: /home/circleci/.go_workspace
+      PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      IMPORT_PATH: github.com/ebisol/ebica-api
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -17,6 +23,7 @@ jobs:
           name: debug
           command: |
             printenv GOPATH
+            printenv IMPORT_PATH
       - run:
           name: make go path
           command: |
@@ -24,7 +31,7 @@ jobs:
             wget https://dl.google.com/go/go1.17.3.linux-amd64.tar.gz
             sudo rm -rf /usr/local/go
             sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
-            mkdir -p "$GOPATH/src/$IMPORT_PATH"
+            mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
             rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
 #       - run:
