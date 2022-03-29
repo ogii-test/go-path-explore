@@ -12,8 +12,6 @@ jobs:
       - GOPATH: /home/circleci/.go_workspace
       - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       - IMPORT_PATH: github.com/ebisol/ebica-api
-      - HOME: /home
-      - PYENV_ROOT: /home
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -29,28 +27,73 @@ jobs:
           name: make go path
           command: |
             set -x
-            # sudo apt-get install rsync
-            # wget https://dl.google.com/go/go1.17.3.linux-amd64.tar.gz
-            # sudo rm -rf /usr/local/go
-            # sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
+            sudo apt-get install rsync
+            wget https://dl.google.com/go/go1.17.3.linux-amd64.tar.gz
+            sudo rm -rf /usr/local/go
+            sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
             mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
             
             
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-#       - run:
-#           name: Go Build
-#           command: |
-#             go env -w GO111MODULE=on
-#             make genall
-#             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
-#           working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
-#       - persist_to_workspace:
-#           root: /home/circleci/
-#           paths:
-#             - ./ebica-api/*
-#             - ./.go_workspace/src/*
-
+       - run:
+           name: Go Build
+           command: |
+             go env -w GO111MODULE=on
+             make genall
+             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
+           working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
+       - persist_to_workspace:
+           root: /home/circleci/
+           paths:
+             - ./ebica-api/*
+             - ./.go_workspace/src/*
+  test2:
+    parameters:
+      img:
+        type: string
+    machine: true
+    resource_class: medium
+    environment:
+      - GOPATH: /home/circleci/.go_workspace
+      - PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - IMPORT_PATH: github.com/ebisol/ebica-api
+    working_directory: ~/ebica-api
+    steps:
+      - checkout
+      - run:
+          name: debug
+          command: |
+            echo $GOPATH
+            echo $IMPORT_PATH
+            echo $HOME
+            echo $PYENV_ROOT
+            
+      - run:
+          name: make go path
+          command: |
+            set -x
+            sudo apt-get install rsync
+            wget https://dl.google.com/go/go1.17.3.linux-amd64.tar.gz
+            sudo rm -rf /usr/local/go
+            sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
+            mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
+            
+            
+            # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
+            go version
+       - run:
+           name: Go Build
+           command: |
+             go env -w GO111MODULE=on
+             make genall
+             GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o ./ecs/ebica-api
+           working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
+       - persist_to_workspace:
+           root: /home/circleci/
+           paths:
+             - ./ebica-api/*
+             - ./.go_workspace/src/*
 
 workflows:
   main:
@@ -61,3 +104,4 @@ workflows:
               img:
                 - circleci/classic:201707-01
                 - ubuntu-2004:202201-02
+        - test2
