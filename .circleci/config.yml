@@ -12,6 +12,7 @@ jobs:
       GOPATH: /home/circleci/.go_workspace
       PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       IMPORT_PATH: github.com/ebisol/ebica-api
+      PYENV_ROOT: /home/notpythonohboy
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -33,24 +34,17 @@ jobs:
             sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
             mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
             
-            
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-            
-      - run:
-          name: staticccheck
-          command: |
-            go install honnef.co/go/tools/cmd/staticcheck@latest
-            ./.circleci/lint.sh
-          working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
-  test2:
+  test_machinetrue:
     machine: true
     resource_class: medium
     environment:
       GOPATH: /home/circleci/.go_workspace
       PATH: /home/circleci/.go_workspace/bin:/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       IMPORT_PATH: github.com/ebisol/ebica-api
+      PYENV_ROOT: /home/notpythonohboy
     working_directory: ~/ebica-api
     steps:
       - checkout
@@ -72,16 +66,8 @@ jobs:
             sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
             mkdir -p "${GOPATH}/src/${IMPORT_PATH}"
             
-            
             # rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-            
-      - run:
-          name: staticccheck
-          command: |
-            go install honnef.co/go/tools/cmd/staticcheck@latest
-            ./.circleci/lint.sh
-          working_directory: /home/circleci/.go_workspace/src/github.com/ebisol/ebica-api
 
 workflows:
   main:
@@ -92,4 +78,4 @@ workflows:
               img:
                 - circleci/classic:201707-01
                 - ubuntu-2004:202201-02
-      - test2
+      - test_machinetrue
