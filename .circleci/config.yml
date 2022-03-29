@@ -14,6 +14,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: debug
+          command: |
+            printenv GOPATH
+      - run:
           name: make go path
           command: |
             sudo apt-get install rsync
@@ -23,7 +27,6 @@ jobs:
             mkdir -p "$GOPATH/src/$IMPORT_PATH"
             rsync -azC --delete $HOME/$CIRCLE_PROJECT_REPONAME/ $GOPATH/src/$IMPORT_PATH/
             go version
-           environment:
 #       - run:
 #           name: Go Build
 #           command: |
